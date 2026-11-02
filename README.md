@@ -6,10 +6,10 @@ An external Regenic plugin for explicitly selected local Claude Code journals an
 
 ## Install and select data
 
-Requires Node.js >=20 and Regenic connector protocol `1.0`. Task execution additionally requires the public host installation pin and `ChannelCapabilities.execute` introduced in `@regenic/connector-contract@0.3.0`, and a matching Regenic host; `0.2.0` cannot safely provide this binding. `@regenic/plugin-host@0.1.0` is published. Contract `0.3.0` is currently a release candidate, not an available registry release: registry-based installation remains blocked until it is published. Do not silently downgrade the contract or fabricate a lockfile resolution. The following registry workflow applies after that release:
+Requires Node.js >=20 and Regenic connector protocol `1.0`. Task execution additionally requires the public host installation pin and `ChannelCapabilities.execute` introduced in the published `@regenic/connector-contract@0.3.0`, and a matching Regenic host; `0.2.0` cannot safely provide this binding. Uses public registry dependencies `@regenic/connector-contract@^0.3.0` and `@regenic/plugin-host@0.1.0`. Build and install this plugin from source:
 
 ```sh
-npm install
+npm ci
 npm run build
 npm pack
 npm install --prefix /absolute/regenic-claude-plugin /absolute/regenic-connector-claude-code-0.1.0.tgz
@@ -132,7 +132,7 @@ Cancel, timeout and all installation stop reasons TERM the owned POSIX process g
 ## Verification and licensing
 
 ```sh
-npm install
+npm ci
 npm run typecheck
 npm test
 npm audit --omit=dev
@@ -143,4 +143,4 @@ Tests use synthetic journals and a Node fake CLI: published conformance, genuine
 
 No Anthropic SDK or CLI is bundled. The reference Python SDK is MIT; TS SDK/Claude use remains governed by their own terms. npm dependencies retain their actual Regenic/Zod licenses; this plugin is MIT. Development test-utils 0.1.0 receives only a targeted contract override to the same pinned contract version, preserving one error-class instance and Zod 4, not a global override.
 
-The registry lockfile is deliberately pending the real contract 0.3.0 publication. Candidate validation uses the exact core-produced tarball in a temporary consumer outside this repository; no vendored candidate or machine-local dependency paths are shipped. Generate/verify the lock against the actual registry artifact before adopting `npm ci` or releasing the plugin. For candidate pack tests only, `REGENIC_CONTRACT_CANDIDATE` can point to that tarball; this variable is never read by the production plugin.
+The lockfile resolves the published registry packages, with no vendored SDK or machine-local dependency paths. Contract 0.3.0 was built from core source `a2baebd2323f0d575fd24736d8b68021234b2c5b`; its public npm tarball SHA-256 is `721097a63c0d7e41e651cb04a1bc674e19596877d433e0036d6f0d39d13a0c38`. The companion host integration is [regenic-ai/regenic#274](https://github.com/regenic-ai/regenic/pull/274). Plugin installation does not publish this package to npm.

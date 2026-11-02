@@ -6,10 +6,10 @@ Regenic 的独立外部插件：显式选择本地 Claude Code 会话日志进�
 
 ## 安装与选择
 
-需要 Node.js >=20 和支持 connector protocol `1.0` 的 Regenic。执行另外依赖 `@regenic/connector-contract@0.3.0` 新增的公共 host 安装 pin 与 `ChannelCapabilities.execute`，以及支持它们的 Regenic host；`0.2.0` 不能安全提供安装绑定。`@regenic/plugin-host@0.1.0` 已发布，contract `0.3.0` 当前为未发布候选：正式 registry 安装须等待该版本发布，不能静默降级或伪造 lockfile 的 registry 地址。以下 registry 构建安装流程适用于该版本发布之后：
+需要 Node.js >=20 和支持 connector protocol `1.0` 的 Regenic。执行另外依赖已发布 `@regenic/connector-contract@0.3.0` 新增的公共 host 安装 pin 与 `ChannelCapabilities.execute`，以及支持它们的 Regenic host；`0.2.0` 不能安全提供安装绑定。使用公共 registry 依赖 `@regenic/connector-contract@^0.3.0` 与 `@regenic/plugin-host@0.1.0`。从源码构建安装本插件：
 
 ```sh
-npm install
+npm ci
 npm run build
 npm pack
 ```
@@ -137,7 +137,7 @@ stdout 流式解析且有 4 MiB 总输出、1 MiB 单行上限，stderr 仅计�
 ## 验证与许可证
 
 ```sh
-npm install
+npm ci
 npm run typecheck
 npm test
 npm audit --omit=dev
@@ -148,4 +148,4 @@ npm pack
 
 包未捆绑 Anthropic SDK 或 Claude CLI。参考 Python SDK 为 MIT，TS SDK/Claude 的使用由其各自条款管理。实际 Regenic 依赖及 Zod 的许可证由 npm 依赖包保留；本插件为 MIT。开发依赖 test-utils 0.1.0 仅对其 contract 依赖做定向 override 至相同 contract 版本，以维持同实例错误类型与 Zod 4，不做全局覆盖。
 
-registry lockfile 明确等待 contract 0.3.0 实际发布后生成。候选验证只在仓库外临时 consumer 中使用 core 产出的确切 tarball，不将候选包 vendor 进本仓库，不提交本机依赖路径。采用 `npm ci` 或发布插件前，须针对实际 registry artifact 生成和核实 lock。仅候选 pack 测试可通过 `REGENIC_CONTRACT_CANDIDATE` 指定该 tarball；生产插件不会读取此环境变量。
+lockfile 使用实际已发布 registry 包，无 vendored SDK 或本机依赖路径。contract 0.3.0 对应 core 源码 `a2baebd2323f0d575fd24736d8b68021234b2c5b`，公共 npm tarball SHA-256 为 `721097a63c0d7e41e651cb04a1bc674e19596877d433e0036d6f0d39d13a0c38`。配套 host 集成为 [regenic-ai/regenic#274](https://github.com/regenic-ai/regenic/pull/274)。安装本插件不会将其发布至 npm。

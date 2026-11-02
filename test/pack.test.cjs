@@ -17,10 +17,9 @@ test("npm tarball installs production-only and loads manifest contributions with
   assert.ok(packed.files.some((f) => f.path === "dist/index.js"));
   assert.ok(!packed.files.some((f) => /test\/|fixtures\/|node_modules\//.test(f.path)));
   const prefix = path.join(dir, "installed");
-  const candidate = process.env.REGENIC_CONTRACT_CANDIDATE;
   execFileSync("npm", [
     "install", "--ignore-scripts", "--omit=dev", "--no-audit", "--no-fund",
-    "--prefix", prefix, path.join(dir, packed.filename), ...(candidate ? [candidate] : []),
+    "--prefix", prefix, path.join(dir, packed.filename),
   ], { encoding: "utf8", timeout: 60000 });
   const requireInstalled = createRequire(path.join(prefix, "entry.cjs"));
   const pkg = requireInstalled("@regenic/connector-claude-code");

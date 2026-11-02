@@ -34,7 +34,7 @@
     "prepack": "npm run build"
   },
   "dependencies": {
-    "@regenic/connector-contract": "0.3.0",
+    "@regenic/connector-contract": "^0.3.0",
     "@regenic/plugin-host": "0.1.0"
   },
   "devDependencies": {
@@ -44,7 +44,7 @@
   },
   "overrides": {
     "@regenic/connector-test-utils@0.1.0": {
-      "@regenic/connector-contract": "0.3.0"
+      "@regenic/connector-contract": "^0.3.0"
     }
   }
 }
