@@ -1,0 +1,50 @@
+{
+  "name": "@regenic/connector-claude-code",
+  "version": "0.1.0",
+  "description": "Explicit local Claude Code journal sync and opt-in task execution for Regenic.",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/regenic-ai/regenic-connector-claude-code.git"
+  },
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "default": "./dist/index.js"
+    }
+  },
+  "files": ["dist", "README.md", "README.zh-CN.md", "LICENSE"],
+  "engines": { "node": ">=20" },
+  "regenic": {
+    "plugin": true,
+    "id": "@regenic/connector-claude-code",
+    "displayName": "Claude Code",
+    "engines": { "regenic": "1.0" },
+    "contributes": {
+      "drivers": ["claudeCodeDriver"],
+      "executors": ["claudeCodeTaskExecutor"]
+    }
+  },
+  "scripts": {
+    "build": "tsc -p tsconfig.json",
+    "typecheck": "tsc -p tsconfig.json --noEmit",
+    "test": "npm run build && node --test test/*.test.cjs",
+    "prepack": "npm run build"
+  },
+  "dependencies": {
+    "@regenic/connector-contract": "^0.3.0",
+    "@regenic/plugin-host": "0.1.0"
+  },
+  "devDependencies": {
+    "@regenic/connector-test-utils": "0.1.0",
+    "@types/node": "^22.10.2",
+    "typescript": "^5.7.2"
+  },
+  "overrides": {
+    "@regenic/connector-test-utils@0.1.0": {
+      "@regenic/connector-contract": "^0.3.0"
+    }
+  }
+}
